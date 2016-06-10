@@ -1,0 +1,17 @@
+<ion-view view-title="Clientes">
+  <ion-content>
+    <h1>Clientes</h1>
+      <div class="Lista100">
+          <ion-list>
+              <ion-item ng-repeat="playlist in clientes" href="#/app/playlists/{{playlist.id}}">
+                  {{playlist.name}}
+              </ion-item>
+          </ion-list>
+         
+      </div>
+      <pie>
+          <button class="button icon-left ion-plus-circled"   ng-click="BuscarCliente()">Buscar Cliente</button>
+
+      </pie>
+  </ion-content>
+</ion-view>

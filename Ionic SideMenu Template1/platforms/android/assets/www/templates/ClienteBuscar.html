@@ -1,0 +1,21 @@
+﻿<ion-modal-view>
+    <ion-header-bar>
+        <h1 class="title">Buscar Cliente</h1>
+        <div class="buttons">
+            <button class="button button-clear" ng-click="closeBuscarCliente()">Cerrar</button>
+        </div>
+    </ion-header-bar>
+    <ion-content>
+        <label class="item item-input">
+            <i class="icon ion-search placeholder-icon"></i>
+            <input type="search" ng-change="BuscarClientes()" placeholder="Nombre Cliente">
+        </label>
+        <br />
+        <ion-list>
+            <ion-item ng-repeat="playlist in playlists" href="#/app/playlists/{{playlist.id}}">
+                {{playlist.title}}
+            </ion-item>
+        </ion-list>
+        
+    </ion-content>
+</ion-modal-view>
