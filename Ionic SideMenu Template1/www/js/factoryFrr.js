@@ -3,6 +3,8 @@
 .factory('Clientes', function () {
     // Might use a resource here that returns a JSON array
 
+    var Cadena = 'http://localhost:49388/';
+
     // Some fake testing data
     var chats = [{
         id: 0,
@@ -45,6 +47,13 @@
                 }
             }
             return null;
-        }
+        },
+        adicionar: function(chat) {
+            chats.push(chat);
+        },
+        Direccion:function(){
+            return Cadena;
+    }
+
     };
 });

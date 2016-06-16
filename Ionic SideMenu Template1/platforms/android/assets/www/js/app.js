@@ -51,15 +51,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
           }
       }
   })
-  .state('app.ClienteBuscar', {
-      url: '/Clientes/:clientesId',
-      views: {
-          'menuContent': {
-              templateUrl: 'templates/ClienteBuscar.html',
-              controller: 'ClienteCtrl'
-          }
-      }
-  })
+  //.state('app.ClienteBuscar', {
+  //    url: '/Clientes',
+  //    views: {
+  //        'menuContent': {
+  //            templateUrl: 'templates/ClienteBuscar.html',
+  //            controller: 'ClienteBuscarCtrl'
+  //        }
+  //    }
+  //})
 
     .state('app.browse', {
         url: '/browse',
@@ -68,6 +68,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
                 templateUrl: 'templates/browse.html'
             }
         }
+    })
+    .state('app.Cambios', {
+        url: '/Cambios',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/Cambios.html',
+                         controller: 'CambiosCtrl'
+                     }
+                 }
     })
       .state('app.playlists', {
           url: '/playlists',

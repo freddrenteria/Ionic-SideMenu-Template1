@@ -1,0 +1,35 @@
+﻿<ion-modal-view>
+    <ion-header-bar>
+        <h1 class="title">Cambiar Observaciones</h1>
+        <div class="buttons">
+            <button class="button button-clear" ng-click="closeCambiarObservacions()">Cerrar</button>
+        </div>
+    </ion-header-bar>
+    <ion-content>
+        <div class="list">
+            <label class="item item-input item-floating-label">
+                <span class="input-label">No Factura</span>
+                <input type="number" placeholder="No Factura" ng-model="NoFactura">
+            </label>
+            <button ng-click="clicMostrarObservaciones()" class="button button-block button-positive">
+                Buscar
+            </button>
+            <div ng-show="MostarObservaciones">
+
+                <ion-list>
+                    <label class="item item-input item-floating-label">
+                        <span class="input-label">Observaciones</span>
+                        <input type="text" placeholder="Observaciones" ng-model="ObservacionesFactura">
+
+
+                    </label>
+                </ion-list>
+            </div>
+        </div>
+        {{MostarObservaciones}}
+        <br />
+        {{ObservacionesFactura}}
+        {{NoFactura}}
+
+    </ion-content>
+</ion-modal-view>

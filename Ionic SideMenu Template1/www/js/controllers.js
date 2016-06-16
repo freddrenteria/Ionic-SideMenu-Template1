@@ -51,22 +51,78 @@ angular.module('starter.controllers', [])
       { title: 'Cowbell', id: 6 }
     ];
 })
-.controller('ClientesCtrl', function ($scope, Clientes, $ionicModal) {
+
+
+.controller('CambiosCtrl', function ($scope, Clientes, $ionicModal, $http) {
+
+    $scope.url = Clientes.Direccion;
+    $scope.MostarObservaciones = false;
+    $scope.NoFactura;
+    $scope.ObservacionesFactura = '';
+
+        $ionicModal.fromTemplateUrl('templates/CambiarObservacions.html', {
+            scope: $scope
+
+
+        }).then(function (modal) {
+            $scope.modal = modal;
+        });
+
+        // Open the login modal
+        $scope.MostrarObservaciones = function () {
+            $scope.modal.show();
+        };
+
+        // Triggered in the login modal to close it
+        $scope.closeCambiarObservacions = function () {
+            $scope.modal.hide();
+        };
+
+        // Open the login modal
+        $scope.mostrarCambiarObservacions = function () {
+            $scope.modal.show();
+        };
+
+        $scope.clicMostrarObservaciones = function () {
+            this.MostarObservaciones = true;
+
+            var direccion = 'http://localhost:49388/api/FacturasVentas?NoFactura=' + this.NoFactura;
+
+            $http({
+                method: 'GET',
+                url: direccion
+            }).then(function successCallback(response) {
+                $scope.ObservacionesFactura = response.data;
+            }, function errorCallback(response) {
+                alert("Error");
+            });
+        };
+    })
+
+.controller('ClientesCtrl', function ($scope, Clientes, $ionicModal, $http) {
+
 
     $scope.clientes = Clientes.all();
+    $scope.clientesBuscar = [];
+
+    $scope.Mensaje = "adsasd";
+    $scope.NombreBuscar = "";
+    $scope.url = Clientes.Cadena;
     $scope.remove = function (chat) {
         Chats.remove(chat);
     };
 
-    // Create the login modal that we will use later
+    // Create the BuscarCliente modal that we will use later
     $ionicModal.fromTemplateUrl('templates/ClienteBuscar.html', {
         scope: $scope
+
+
     }).then(function (modal) {
         $scope.modal = modal;
     });
 
     $scope.BuscarClientes = function () {
-
+        alert("sdsd");
     };
     // Triggered in the login modal to close it
     $scope.closeBuscarCliente = function () {
@@ -76,6 +132,38 @@ angular.module('starter.controllers', [])
     // Open the login modal
     $scope.BuscarCliente = function () {
         $scope.modal.show();
+    };
+
+    $scope.TraerClientes = function () {
+
+        var Nombre = this.NombreBuscar;
+        if (Nombre.length > 3) {
+            var direccion = $scope.url + 'api/Clientes?Nombre=' + Nombre;
+
+            $http({
+                method: 'GET',
+                url: direccion
+            }).then(function successCallback(response) {
+                $scope.clientesBuscar = response.data;
+            }, function errorCallback(response) {
+                alert("Error");
+            });
+        }
+    };
+
+    $scope.AdicionarCliente = function (cliente) {
+
+
+        var chat = {
+            id: cliente.IdCliente,
+            name: nombre,
+            lastText: 'This is wicked good ice cream.',
+            face: 'img/mike.png'
+        };
+        Clientes.adicionar(chat);
+        $scope.closeBuscarCliente();
+        $scope.clientes = Clientes.all();
+
     };
 
     // Perform the login action when the user submits the login form
@@ -92,9 +180,13 @@ angular.module('starter.controllers', [])
 
 })
 .controller('ClienteCtrl', function ($scope, $stateParams) {
-        $scope.Id = parseInt($stateParams.clienteId);
+    $scope.Id = parseInt($stateParams.clienteId);
 
- })
+})
+.controller('ClienteBuscarCtrl', function ($scope) {
+    $scope.Mensaje = "Hola BUscar";
+
+})
 
 
 .controller('PlaylistCtrl', function ($scope, $stateParams) {
