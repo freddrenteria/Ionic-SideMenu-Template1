@@ -86,7 +86,7 @@ angular.module('starter.controllers', [])
         $scope.clicMostrarObservaciones = function () {
             this.MostarObservaciones = true;
 
-            var direccion = 'http://localhost:49388/api/FacturasVentas?NoFactura=' + this.NoFactura;
+            var direccion = 'http://webserviciosruitoque.azurewebsites.net/api/FacturasVentas?NoFactura=' + this.NoFactura;
 
             $http({
                 method: 'GET',
