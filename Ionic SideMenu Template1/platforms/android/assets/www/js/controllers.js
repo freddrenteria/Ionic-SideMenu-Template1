@@ -59,6 +59,7 @@ angular.module('starter.controllers', [])
     $scope.MostarObservaciones = false;
     $scope.NoFactura;
     $scope.ObservacionesFactura = '';
+    $scope.MostrarContenido = true;
 
         $ionicModal.fromTemplateUrl('templates/CambiarObservacions.html', {
             scope: $scope
@@ -83,9 +84,24 @@ angular.module('starter.controllers', [])
             $scope.modal.show();
         };
 
+    
+
+        $scope.clicGuardarObservaciones1 = function () {
+
+            var direccion = 'http://webserviciosruitoque.azurewebsites.net/api/FacturasVentas?NoFactura=' + this.NoFactura + '&Observaciones=' + this.ObservacionesFactura;
+
+            $http({
+                method: 'PUT',
+                url: direccion
+            }).then(function successCallback(response) {
+                $scope.MostrarContenido = false;
+            }, function errorCallback(response) {
+                alert("Error");
+            });
+
+        };
         $scope.clicMostrarObservaciones = function () {
             this.MostarObservaciones = true;
-
             var direccion = 'http://webserviciosruitoque.azurewebsites.net/api/FacturasVentas?NoFactura=' + this.NoFactura;
 
             $http({
@@ -96,6 +112,8 @@ angular.module('starter.controllers', [])
             }, function errorCallback(response) {
                 alert("Error");
             });
+
+         
         };
     })
 
