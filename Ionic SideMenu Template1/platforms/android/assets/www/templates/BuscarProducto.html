@@ -1,0 +1,15 @@
+﻿<ion-view view-title="Buscar Servicios">
+    <ion-content>
+        <h1>Servicios</h1>
+        <ion-list>
+            <ion-item class="item item-icon-left item-icon-right" href="#" ng-click="goToNextSlide()">
+                <i class="icon ion-search blueicon"></i>
+                <input type="search" ng-change="TraerProductos()" ng-model="NombreProducto" placeholder="Buscar Servicios">
+                <i class="icon ion-close-circled" ng-click="LimpiarBusqueda()"></i>
+            </ion-item>
+            <ion-item ng-repeat="cargo in ProductosBuscar" href="#/app/playlists/{{Cliente}}" ng-click="AdicionarProducto(cargo)" >
+                {{cargo.NombreCargo}}
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>

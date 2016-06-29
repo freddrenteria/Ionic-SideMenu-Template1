@@ -1,10 +1,10 @@
-<ion-view view-title="Clientes">
+<ion-view view-title="Clientes..">
   <ion-content>
     <h1>Clientes</h1>
       <div class="Lista100">
           <ion-list>
-              <ion-item ng-repeat="playlist in clientes" href="#/app/playlists/{{playlist.id}}">
-                  {{playlist.name}}
+              <ion-item ng-repeat="playlist in clientes" href="#/app/playlists/{{playlist.IdCliente}}">
+                  {{playlist.NombreCliente}}
               </ion-item>
           </ion-list>
          

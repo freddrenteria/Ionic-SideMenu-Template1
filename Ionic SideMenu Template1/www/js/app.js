@@ -8,6 +8,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
 .run(function ($ionicPlatform) {
     $ionicPlatform.ready(function () {
+
+        //$ionicAnalytics.register();
+
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
         if (cordova.platformId === 'ios' && window.cordova && window.cordova.plugins.Keyboard) {
@@ -19,6 +22,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
             // org.apache.cordova.statusbar required
             StatusBar.styleDefault();
         }
+
     });
 })
 
@@ -51,6 +55,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
           }
       }
   })
+
+          .state('app.BuscarProducto', {
+              url: '/BuscarProducto',
+              views: {
+                  'menuContent': {
+                      templateUrl: 'templates/BuscarProducto.html',
+                      controller: 'BuscarProductoCtrl'
+                  }
+              }
+          })
   //.state('app.ClienteBuscar', {
   //    url: '/Clientes',
   //    views: {
@@ -61,11 +75,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   //    }
   //})
 
-    .state('app.browse', {
-        url: '/browse',
+    .state('app.Empleados', {
+        url: '/Empleados',
         views: {
             'menuContent': {
-                templateUrl: 'templates/browse.html'
+                templateUrl: 'templates/Empleados.html',
+                controller: 'EmpleadoCtrl'
             }
         }
     })
@@ -74,9 +89,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         views: {
             'menuContent': {
                 templateUrl: 'templates/Cambios.html',
-                         controller: 'CambiosCtrl'
-                     }
-                 }
+                controller: 'CambiosCtrl'
+            }
+        }
     })
       .state('app.playlists', {
           url: '/playlists',
@@ -89,10 +104,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       })
 
     .state('app.single', {
-        url: '/playlists/:playlistId',
+        url: '/playlists/:IdCLiente',
         views: {
             'menuContent': {
-                templateUrl: 'templates/playlist.html',
+                templateUrl: 'templates/ServiciosByCliente.html',
                 controller: 'PlaylistCtrl'
             }
         }

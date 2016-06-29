@@ -16,28 +16,28 @@
                 <button ng-click="clicMostrarObservaciones()" class="button button-block button-positive">
                     Buscar
                 </button>
-                <div ng-show="MostarObservaciones">
 
-                    <ion-list>
-                        <label class="item item-input item-floating-label">
-                            <span class="input-label">Observaciones</span>
-                            <input type="text" placeholder="Observaciones" ng-model="ObservacionesFactura">
-                           
-                        </label>
-                    </ion-list>
-                    <button ng-click="clicGuardarObservaciones1()" class="button button-block button-positive">
-                        Guardar
-                    </button>
-                </div>
+            </div>
+            <div ng-show="MostarObservaciones">
+                <ion-list>
+                    <label class="item item-input item-floating-label">
+                        <span class="input-label">Observaciones</span>
+                        <input type="text" placeholder="Observaciones" ng-model="ObservacionesFactura">
+
+                    </label>
+                </ion-list>
+                <button ng-click="clicGuardarObservaciones1()" class="button button-block button-positive">
+                    Guardar
+                </button>
             </div>
             <div ng-hide="MostrarContenido">
                 <button ng-click="closeCambiarObservacions()" class="button button-block button-positive">
                     Guardado Correctamente
                 </button>
-                    
-</div>
+
+            </div>
         </div>
-        
+
 
     </ion-content>
 </ion-modal-view>

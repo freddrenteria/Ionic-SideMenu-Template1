@@ -21,6 +21,9 @@
         },
         "ionic-plugin-keyboard": {
             "PACKAGE_NAME": "com.ionicframework.ionicsidemenu"
+        },
+        "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "com.sicolombia.peluqueriahairplay"
         }
     },
     "dependent_plugins": {}

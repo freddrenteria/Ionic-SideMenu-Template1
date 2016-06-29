@@ -1,0 +1,29 @@
+﻿<ion-view view-title="Servicios de: {{NombreCliente}}">
+
+    <ion-content>
+        <h1>Servicios</h1>
+        idCliente: {{IdCliente}}
+        <div class="Lista100">
+
+            <div class="Lista100">
+                <ion-list>
+                    <ion-item ng-repeat="Prod in ListaProductos" href="#/app/playlists/{{IdCliente}}">
+                        {{Prod.Producto}}
+
+                        <span class="item-note">
+                            {{Prod.NombreEmpleado}}
+                        </span>
+                    </ion-item>
+                </ion-list>
+
+            </div>
+
+        </div>
+
+
+        <pie>
+            <!--<button class="button icon-left ion-plus-circled" href="#/app/BuscarProducto">Buscar Servicio</button>-->
+            <a class="button icon-left ion-plus-circled" href="#/app/BuscarProducto">Buscar Servicio</a>
+        </pie>
+    </ion-content>
+</ion-view>

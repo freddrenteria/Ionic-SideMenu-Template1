@@ -6,15 +6,29 @@
         </div>
     </ion-header-bar>
     <ion-content>
-        <label class="item item-input">
+        <!--<label class="item item-input">
             <i class="icon ion-search placeholder-icon"></i>
             <input type="search" ng-change="TraerClientes()" ng-model="NombreBuscar" placeholder="Nombre Cliente">
+            <i class="icon ion-search placeholder-icon"></i>
         </label>
+        <a class="button button-icon icon ion-settings"></a>
         <br />
-        
         <ion-list>
-            <ion-item ng-repeat="cliente in clientesBuscar" ng-click="AdicionarCliente(cliente)" >
-                {{cliente.NombrePrimero}}  {{cliente.NombreSegundo}} {{cliente.ApellidoPrimero}} {{cliente.ApellidoSegundo}}
+            <ion-item class="item item-icon-left item-icon-right" href="#" ng-click="goToNextSlide()">
+                <i class="icon ion-male blueicon"></i>
+                <input type="search" ng-change="TraerClientes()" ng-model="NombreBuscar" placeholder="Nombre Cliente">
+                <i class="icon ion-chevron-right"></i>
+            </ion-item>
+            
+        </ion-list>-->
+        <ion-list>
+            <ion-item class="item item-icon-left item-icon-right" href="#" ng-click="goToNextSlide()">
+                <i class="icon ion-search blueicon"></i>
+                <input type="search" ng-change="TraerClientes()" ng-model="NombreBuscar" placeholder="Nombre Cliente">
+                <i class="icon ion-close-circled" ng-click="LimpiarBusqueda()"></i>
+            </ion-item>
+            <ion-item ng-repeat="cargo in clientesBuscar" ng-click="AdicionarCliente(cargo)" >
+                {{cargo.NombreCargo}} 
             </ion-item>
         </ion-list>
     </ion-content>

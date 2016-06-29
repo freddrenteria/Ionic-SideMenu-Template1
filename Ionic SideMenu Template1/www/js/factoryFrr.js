@@ -1,59 +1,84 @@
 ﻿angular.module('starter.services', [])
 
-.factory('Clientes', function () {
-    // Might use a resource here that returns a JSON array
+.factory('Clientes', function (Cadena, $http) {
 
-    var Cadena = 'http://localhost:49388/';
 
     // Some fake testing data
-    var chats = [{
-        id: 0,
-        name: 'Freddy Renteria',
-        lastText: 'You on your way?',
-        face: 'img/ben.png'
-    }, {
-        id: 1,
-        name: 'Max Lynx',
-        lastText: 'Hey, it\'s me',
-        face: 'img/max.png'
-    }, {
-        id: 2,
-        name: 'Adam Bradleyson',
-        lastText: 'I should buy a boat',
-        face: 'img/adam.jpg'
-    }, {
-        id: 3,
-        name: 'Perry Governor',
-        lastText: 'Look at my mukluks!',
-        face: 'img/perry.png'
-    }, {
-        id: 4,
-        name: 'Mike Harrington',
-        lastText: 'This is wicked good ice cream.',
-        face: 'img/mike.png'
-    }];
+    var chats = [];
 
     return {
         all: function () {
+
             return chats;
         },
         remove: function (chat) {
             chats.splice(chats.indexOf(chat), 1);
         },
-        get: function (chatId) {
+        get: function (IdCliente) {
             for (var i = 0; i < chats.length; i++) {
-                if (chats[i].id === parseInt(chatId)) {
+                if (chats[i].IdCliente === parseInt(IdCliente)) {
                     return chats[i];
                 }
             }
             return null;
         },
-        adicionar: function(chat) {
+        getNombre: function (IdCliente) {
+            for (var i = 0; i < chats.length; i++) {
+                if (chats[i].IdCliente === parseInt(IdCliente)) {
+                    return chats[i].NombreCliente;
+                }
+            }
+            return null;
+        },
+        adicionar: function (chat) {
             chats.push(chat);
         },
-        Direccion:function(){
-            return Cadena;
-    }
+        removeAll: function () {
+            chats = [];
+        },
+        setchats(chatsNuevos) {
+            chats = chatsNuevos;
+        }
 
+    };
+})
+
+.factory('Productos',function(Cadena, $http){
+    var Productos=[];
+    
+    return{
+        setAllProductos:function(prods){
+            Productos=prods;
+        },
+        setProducto:function(prod){
+            Productos.push(prod);
+        },
+        all: function(){
+            return Productos;
+        }
+    };
+})
+
+.factory('Cadena', function () {
+    var parametros = {
+        Cadena: 'http://localhost',
+        Empleado: -1,
+        NombreEmpleado:'',
+        IdCliente:0
+    };
+    //var Cadena =http://localhost:49388/
+    //var Cadena = 'http://sicolombia.info/';
+
+    return {
+        getCadena: function () {
+            return parametros;
+        },
+        setEmpleado(IdEmpleado,NombreEmpleado){
+            parametros.Empleado = IdEmpleado;
+            parametros.NombreEmpleado = NombreEmpleado;
+        },
+        setCliente(Cliente) {
+            parametros.IdCliente = Cliente;
+        }
     };
 });

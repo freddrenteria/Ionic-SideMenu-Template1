@@ -53,7 +53,7 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('CambiosCtrl', function ($scope, Clientes, $ionicModal, $http) {
+.controller('CambiosCtrl', function ($scope, Clientes, Cadena, $ionicModal, $http) {
 
     $scope.url = Clientes.Direccion;
     $scope.MostarObservaciones = false;
@@ -61,66 +61,75 @@ angular.module('starter.controllers', [])
     $scope.ObservacionesFactura = '';
     $scope.MostrarContenido = true;
 
-        $ionicModal.fromTemplateUrl('templates/CambiarObservacions.html', {
-            scope: $scope
+    $ionicModal.fromTemplateUrl('templates/CambiarObservacions.html', {
+        scope: $scope
 
 
-        }).then(function (modal) {
-            $scope.modal = modal;
+    }).then(function (modal) {
+        $scope.modal = modal;
+    });
+
+    // Open the login modal
+    $scope.MostrarObservacionesf = function () {
+        $scope.modal.show();
+
+    };
+
+    // Triggered in the login modal to close it
+    $scope.closeCambiarObservacions = function () {
+        $scope.modal.hide();
+    };
+
+    // Open the login modal
+    $scope.mostrarCambiarObservacions = function () {
+        //this.MostrarContenido = true;
+        $scope.MostrarContenido = true;
+
+        $scope.MostarObservaciones = false;
+        $scope.modal.show();
+
+    };
+
+
+
+    $scope.clicGuardarObservaciones1 = function () {
+
+        var direccion = Cadena.getCadena().Cadena + '/api/FacturasVentas?NoFactura=' + this.NoFactura + '&Observaciones=' + this.ObservacionesFactura;
+        $scope.MostrarContenido = false;
+        $scope.MostarObservaciones = false;
+
+        $http({
+            method: 'PUT',
+            url: direccion
+        }).then(function successCallback(response) {
+
+        }, function errorCallback(response) {
+            $scope.MostrarContenido = true;
+            $scope.MostarObservaciones = true;
         });
 
-        // Open the login modal
-        $scope.MostrarObservaciones = function () {
-            $scope.modal.show();
-        };
+    };
+    $scope.clicMostrarObservaciones = function () {
+        $scope.MostarObservaciones = true;
+        var direccion = Cadena.getCadena().Cadena + '/api/FacturasVentas?NoFactura=' + this.NoFactura;
 
-        // Triggered in the login modal to close it
-        $scope.closeCambiarObservacions = function () {
-            $scope.modal.hide();
-        };
-
-        // Open the login modal
-        $scope.mostrarCambiarObservacions = function () {
-            $scope.modal.show();
-        };
-
-    
-
-        $scope.clicGuardarObservaciones1 = function () {
-
-            var direccion = 'http://webserviciosruitoque.azurewebsites.net/api/FacturasVentas?NoFactura=' + this.NoFactura + '&Observaciones=' + this.ObservacionesFactura;
-
-            $http({
-                method: 'PUT',
-                url: direccion
-            }).then(function successCallback(response) {
-                $scope.MostrarContenido = false;
-            }, function errorCallback(response) {
-                alert("Error");
-            });
-
-        };
-        $scope.clicMostrarObservaciones = function () {
-            this.MostarObservaciones = true;
-            var direccion = 'http://webserviciosruitoque.azurewebsites.net/api/FacturasVentas?NoFactura=' + this.NoFactura;
-
-            $http({
-                method: 'GET',
-                url: direccion
-            }).then(function successCallback(response) {
-                $scope.ObservacionesFactura = response.data;
-            }, function errorCallback(response) {
-                alert("Error");
-            });
-
-         
-        };
-    })
-
-.controller('ClientesCtrl', function ($scope, Clientes, $ionicModal, $http) {
+        $http({
+            method: 'GET',
+            url: direccion
+        }).then(function successCallback(response) {
+            $scope.ObservacionesFactura = response.data;
+        }, function errorCallback(response) {
+            alert("Error");
+        });
 
 
-    $scope.clientes = Clientes.all();
+    };
+})
+
+.controller('ClientesCtrl', function ($scope, Clientes, Cadena, $ionicModal, $http) {
+
+
+    $scope.clientes = getAllClientes();
     $scope.clientesBuscar = [];
 
     $scope.Mensaje = "adsasd";
@@ -135,9 +144,15 @@ angular.module('starter.controllers', [])
         scope: $scope
 
 
+    }, {
+        scope: $scope,  /// GIVE THE MODAL ACCESS TO PARENT SCOPE
+        animation: 'slide-in-left',//'slide-left-right', 'slide-in-up', 'slide-right-left'
+        focusFirstInput: true
     }).then(function (modal) {
         $scope.modal = modal;
     });
+
+
 
     $scope.BuscarClientes = function () {
         alert("sdsd");
@@ -149,19 +164,24 @@ angular.module('starter.controllers', [])
 
     // Open the login modal
     $scope.BuscarCliente = function () {
-        $scope.modal.show();
-    };
 
+        $scope.modal.show();
+        $scope.NombreBuscar = "";
+    };
+    $scope.LimpiarBusqueda = function () {
+        this.NombreBuscar = "";
+    };
     $scope.TraerClientes = function () {
 
         var Nombre = this.NombreBuscar;
         if (Nombre.length > 3) {
-            var direccion = $scope.url + 'api/Clientes?Nombre=' + Nombre;
+            var direccion = Cadena.getCadena().Cadena + '/api/Cargos/BuscarbyNombre?Nombre=' + Nombre;
 
             $http({
                 method: 'GET',
                 url: direccion
             }).then(function successCallback(response) {
+
                 $scope.clientesBuscar = response.data;
             }, function errorCallback(response) {
                 alert("Error");
@@ -169,20 +189,67 @@ angular.module('starter.controllers', [])
         }
     };
 
+    function getAllClientes() {
+        var direccion = Cadena.getCadena().Cadena + '/api/ListaClientes/GetListaClientes?Caja=1';
+
+        $scope.clientes = Clientes.all();
+
+        $http({
+            method: 'GET',
+            url: direccion
+        }).then(function successCallback(response) {
+            //$scope.clientesBuscar = response.data;
+
+            Clientes.setchats(response.data);
+
+            $scope.clientes = Clientes.all();
+
+        }, function errorCallback(response) {
+            alert("Error");
+        });
+    };
+
     $scope.AdicionarCliente = function (cliente) {
 
 
-        var chat = {
-            id: cliente.IdCliente,
-            name: nombre,
-            lastText: 'This is wicked good ice cream.',
-            face: 'img/mike.png'
-        };
-        Clientes.adicionar(chat);
+        //var chat = {
+        //    id: cliente.Id_Cargo,
+        //    name: cliente.NombreCargo,
+
+        //};
+        //Clientes.adicionar(chat);
         $scope.closeBuscarCliente();
-        $scope.clientes = Clientes.all();
+        //$scope.clientes = Clientes.all();
+
+        var direccion = Cadena.getCadena().Cadena + '/api/ListaClientes';
+
+        var ClientesAdd = {
+            Indice: 1,
+            IdCliente: cliente.Id_Cargo,
+            IdCaja: 1,
+            NombreCliente: cliente.NombreCargo,
+        };
+        Clientes.adicionar(ClientesAdd);
+
+        $http({
+            method: 'POST',
+            url: direccion,
+            data: ClientesAdd
+        }).then(function successCallback(response) {
+
+            getAllClientes();
+
+        }, function errorCallback(response) {
+            alert("Error");
+        });
+
+
+
 
     };
+
+
+
 
     // Perform the login action when the user submits the login form
     $scope.doLogin = function () {
@@ -197,17 +264,135 @@ angular.module('starter.controllers', [])
 
 
 })
+
+
+    .controller('BuscarProductoCtrl', function ($scope, Cadena,Clientes,Productos, $http, $ionicHistory) {
+
+        $scope.ProductosBuscar = [];
+        $scope.NombreProducto = "";
+        $scope.Cliente = Cadena.getCadena().IdCliente;
+
+        $scope.TraerProductos = function () {
+
+            var Nombre = this.NombreProducto;
+            if (Nombre.length > 3) {
+                var direccion = Cadena.getCadena().Cadena + '/api/Cargos/BuscarProductoByEmpleado?IdEmpleado=' + Cadena.getCadena().Empleado + '&Producto=' + Nombre;
+
+                $http({
+                    method: 'GET',
+                    url: direccion
+                }).then(function successCallback(response) {
+                    $scope.ProductosBuscar = response.data;
+                }, function errorCallback(response) {
+                    alert("Error");
+                });
+            }
+        };
+
+        $scope.LimpiarBusqueda = function () {
+            this.NombreProducto = "";
+            $scope.ProductosBuscar = [];
+        };
+
+        $scope.AdicionarProducto = function (Producto) {
+
+            var direccion = Cadena.getCadena().Cadena + '/api/ListaClientesServicios';
+
+            var ProductoAdd = {
+                Indice: 1,
+                IdCliente: Cadena.getCadena().IdCliente,
+                IdProducto: Producto.Id_Cargo,
+                IdEstilista: Cadena.getCadena().Empleado,
+                Producto: Producto.NombreCargo,
+                NombreEmpleado:Cadena.getCadena().NombreEmpleado,
+            };
+
+            Productos.setProducto(ProductoAdd);
+
+            $http({
+                method: 'POST',
+                url: direccion,
+                data: ProductoAdd
+            }).then(function successCallback(response) {
+                //getAllClientes();
+
+                var Cliente = Cadena.getCadena().IdCliente;
+
+                
+
+
+            }, function errorCallback(response) {
+                alert("Error");
+            });
+
+        };
+    })
+
 .controller('ClienteCtrl', function ($scope, $stateParams) {
     $scope.Id = parseInt($stateParams.clienteId);
 
 })
+
 .controller('ClienteBuscarCtrl', function ($scope) {
     $scope.Mensaje = "Hola BUscar";
 
 })
 
 
-.controller('PlaylistCtrl', function ($scope, $stateParams) {
-    $scope.Id = parseInt($stateParams.playlistId);
+
+    .controller('EmpleadoCtrl', function ($scope, Clientes, Cadena, Productos, $stateParams, $http) {
+        $scope.Empleados=getProductos();
+
+        function getProductos() {
+            $scope.ListaProductos = Productos.all();
+
+            var direccion = Cadena.getCadena().Cadena + '/api/Cargos/BuscarEmpleados';
+            $http({
+                method: 'GET',
+                url: direccion
+            }).then(function successCallback(response) {
+                //$scope.clientesBuscar = response.data;
+
+                $scope.Empleados = response.data;
+
+            }, function errorCallback(response) {
+                alert("Error");
+            });
+
+        };
+        
+        $scope.clicSelectEmpleado=   function (emple) {
+
+            Cadena.setEmpleado(emple.Id_Cargo, emple.NombreCargo);
+        };
+    })
+
+.controller('PlaylistCtrl', function ($scope, Clientes, Cadena, Productos, $stateParams, $http) {
+    $scope.IdCliente = parseInt($stateParams.IdCLiente);
+    Cadena.setCliente($scope.IdCliente);
+    $scope.NombreCliente = Clientes.getNombre($scope.IdCliente);
+
+    $scope.ListaProductos = getProductos();
+
+
+    function getProductos() {
+        $scope.ListaProductos = Productos.all();
+
+        var direccion = Cadena.getCadena().Cadena + '/api/ListaClientesServicios/GetListaClientesServicios?idCliente=' + $scope.IdCliente;
+        $http({
+            method: 'GET',
+            url: direccion
+        }).then(function successCallback(response) {
+            //$scope.clientesBuscar = response.data;
+
+          
+            Productos.setAllProductos(response.data);
+
+            $scope.ListaProductos = Productos.all();
+
+        }, function errorCallback(response) {
+            alert("Error");
+        });
+    };
 
 });

@@ -1,0 +1,17 @@
+﻿<ion-view view-title="Empleados">
+    <ion-content>
+        <h1>Empleados</h1>
+        <div class="Lista100">
+            <ion-list>
+                <ion-item ng-repeat="emple in Empleados" ng-click="clicSelectEmpleado(emple)"  href="#/app/Clientes">
+                    {{emple.NombreCargo}}
+                </ion-item>
+            </ion-list>
+
+        </div>
+        <pie>
+            <button class="button icon-left ion-plus-circled" ng-click="BuscarCliente()">Buscar Cliente</button>
+
+        </pie>
+    </ion-content>
+</ion-view>
