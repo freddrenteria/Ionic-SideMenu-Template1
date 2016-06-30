@@ -61,7 +61,7 @@
 
 .factory('Cadena', function () {
     var parametros = {
-        Cadena: 'http://localhost',
+        Cadena: 'http://peluqueria.sicolombia.info',
         Empleado: -1,
         NombreEmpleado:'',
         IdCliente:0
